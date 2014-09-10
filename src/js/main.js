@@ -1,0 +1,3 @@
+function aTestFunction() {
+    return true;
+}

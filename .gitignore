@@ -1,3 +1,13 @@
+# our ignore
+
+.idea/
+node_modules/
+bower_components/
+build/
+
+
+# GitHub node Defaults
+
 # Logs
 logs
 *.log
