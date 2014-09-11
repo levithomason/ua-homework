@@ -1,0 +1,64 @@
+input,
+textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: @ua-input-padding-vertical @ua-input-padding-horizontal;
+    font-family: inherit;
+    border: 2px solid transparent;
+    border-radius: @ua-border-radius;
+
+    &:focus {
+        outline: none;
+        border-color: @ua-color-primary;
+    }
+}
+
+textarea {
+    resize: none;
+}
+
+label  {
+    margin-top: 20px;
+    font-weight: 600;
+    display: block;
+    color: inherit;
+
+    &.ua-checkbox,
+    &.ua-radio {
+        clear: both;
+        cursor: pointer;
+        font-weight: normal;
+        margin-top: 0;
+        margin-bottom: 0;
+        & + .ua-checkbox,
+        & + .ua-radio {
+            margin-bottom: 10px;
+        }
+            input {
+            float: left;
+            width: auto;
+            margin: 4px 10px 0 0;
+        }
+
+        i {
+            text-align: center;
+            width: 15px;
+        }
+    }
+}
+
+.ua-input-icon {
+    position: relative;
+
+    i {
+        position: absolute;
+        left: @ua-input-padding-horizontal;
+        top: @ua-input-padding-vertical;
+        color: lighten(@ua-text-color, 30);
+
+        & + input {
+            padding-left: @ua-input-padding-horizontal * 2;
+        }
+    }
+
+}

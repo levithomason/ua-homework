@@ -1,0 +1,29 @@
+.ua-container {
+    position: absolute;
+    width: 100%;
+    max-width: @ua-screen-lg;
+    margin: auto;
+    left: 0;
+    right: 0;
+}
+
+.ua-row {
+    overflow: hidden;
+//    border: 1px solid #0F0;
+}
+
+.ua-col-1 {
+    .ua-col-base();
+}
+
+.ua-col-1-4 {
+    .ua-col-base();
+
+    @media (min-width: @ua-screen-sm) {
+        width: 50%;
+    }
+
+    @media (min-width: @ua-screen-md) {
+        width: 25%;
+    }
+}

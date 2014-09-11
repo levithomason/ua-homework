@@ -2,6 +2,7 @@
     'use strict';
 
     var angularHTMLify = require('gulp-angular-htmlify');
+    var autoprefixer = require('gulp-autoprefixer');
     var del = require('del');
     var runSequence = require('run-sequence');
     var concat = require('gulp-concat');
@@ -43,6 +44,7 @@
             [
                 'build-fonts',
                 'build-html',
+                'build-img',
                 'build-js',
                 'build-less'
             ],
@@ -63,8 +65,19 @@
             .pipe(gulp.dest('build'));
     });
 
+    gulp.task('build-img', function() {
+        return gulp.src('src/img/*.*')
+            .pipe(changed('build/img'))
+            .pipe(gulp.dest('build/img'));
+    });
+
     gulp.task('build-js', function() {
-        return gulp.src(['src/js/vendor/*.js', 'src/js/*.js'])
+        return gulp.src([
+            'bower_components/angular-elastic/elastic.js',
+            'src/js/vendor/*.js',
+            'src/js/app.js',
+            'src/js/controllers.js'
+        ])
             .pipe(sourcemaps.init())
             .pipe(concat('ua_homework.min.js'))
             .pipe(sourcemaps.write())
@@ -73,10 +86,10 @@
     });
 
     gulp.task('build-less', function() {
-        return gulp.src('src/css/ua_homework.less')
-            .pipe(rename("ua_homework.min.css"))
-            .pipe(changed('build/css'))
+        return gulp.src('src/css/ua_framework.less')
+            .pipe(rename("ua_framework.min.css"))
             .pipe(less())
+            .pipe(autoprefixer())
             .pipe(minifyCSS({ keepSpecialComments: 0 }))
             .pipe(gulp.dest('build/css'));
     });
@@ -112,6 +125,7 @@
             [
                 'watch-fonts',
                 'watch-html',
+                'watch-img',
                 'watch-js',
                 'watch-less'
             ],
@@ -120,11 +134,15 @@
     });
 
     gulp.task('watch-fonts', function() {
-        return gulp.watch([ 'src/fonts'], ['build-fonts']);
+        return gulp.watch([ 'src/fonts/**/*.*'], ['build-fonts']);
     });
 
     gulp.task('watch-html', function() {
         return gulp.watch([ 'src/index.html'], ['build-html']);
+    });
+
+    gulp.task('watch-img', function() {
+        return gulp.watch([ 'src/img/**/*.*'], ['build-img']);
     });
 
     gulp.task('watch-js', function() {

@@ -16,5 +16,6 @@
     "tests"
   ],
   "dependencies": {
+    "angular-elastic": "~2.4.0"
   }
 }
