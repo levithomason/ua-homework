@@ -36,76 +36,135 @@
 
     <div class="ua-container">
         <div class="ua-row">
-            <div class="ua-col-1">
-                <div>Put a stat thing here!</div>
-            </div>
-        </div>
-        <div class="ua-row">
             <div class="ua-col-1-4">
-                <h2><i class="fa fa-envelope"></i> New Message</h2>
 
-                <form class="ua-compose-form">
-                    <input ng-model="message.title" type="text" name="ua-message-title" placeholder="Title"/>
-                    <textarea ng-model="message.body" msd-elastic name="ua-message-body" placeholder="Body"></textarea>
+                <form class="ua-compose-form" name="message_form">
+                    <h3>New Message</h3>
 
-                    <h4><i class="fa fa-cogs"></i> Delivery Options</h4>
+                    <input ng-model="message.title" type="text" name="ua-message-title" placeholder="Title*" required/>
+                    <textarea ng-model="message.body" msd-elastic name="ua-message-body" placeholder="Body*" required></textarea>
+                    <span class="ua-byte-counter" ng-class="{'ua-error': message.bytesRemaining() < 0}">{{ message.bytesRemaining() }} bytes left</span>
 
-                    <label>Send</label>
-                    <label class="ua-radio">
-                        <i class="fa fa-flash"></i>
-                        Immediately
-                        <input type="radio" name="send_option" value="false" ng-model="message.is_scheduled" ng-checked="true"/>
-                    </label>
-                    <label class="ua-radio">
-                        <i class="fa fa-clock-o"></i>
-                        Later
-                        <input type="radio" name="send_option" value="true" ng-model="message.is_scheduled"/>
-                    </label>
+                    <hr/>
 
-                    <input ng-show="message.is_scheduled" type="text" ng-model="message.date" placeholder="MM/DD/YYYY"/>
-                    <input ng-show="message.is_scheduled" type="text" ng-model="message.time" placeholder="9:00 AM"/>
+                    <h5><i class="fa fa-users"></i> Target Audience</h5>
 
-                    <label>Platforms</label>
-                    <label class="ua-checkbox">
-                        <i class="fa fa-android"></i>
-                        Android
-                        <input type="checkbox" ng-model="message.target_android"/>
-                    </label>
-                    <label class="ua-checkbox">
-                        <i class="fa fa-apple"></i>
-                        iOS
-                        <input type="checkbox" ng-model="message.target_ios"/>
-                    </label>
-
-                    <div class="ua-input-icon">
-                        <i class="fa fa-map-marker"></i>
-                        <input type="text" ng-model="message.location" placeholder="Location"/>
+                    <div class="ua-form-group">
+                        <div class="ua-input-icon">
+                            <i class="fa fa-map-marker"></i>
+                            <input type="text" ng-model="message.location" placeholder="Location"/>
+                        </div>
                     </div>
 
-                    <button class="ua-button">
+                    <div class="ua-form-group">
+                        <label class="ua-checkbox">
+                            <i class="fa fa-android"></i>
+                            Android
+                            <input type="checkbox" ng-model="message.target_android"/>
+                        </label>
 
+                        <label class="ua-checkbox">
+                            <i class="fa fa-apple"></i>
+                            iOS
+                            <input type="checkbox" ng-model="message.target_ios"/>
+                        </label>
+                    </div>
+
+                    <div class="ua-form-group">
+                        <label class="ua-radio">
+                            <i class="fa fa-flash"></i>
+                            Instant
+                            <input type="radio" name="send_option" ng-value="false" ng-model="message.is_scheduled"/>
+                        </label>
+                        <label class="ua-radio">
+                            <i class="fa fa-clock-o"></i>
+                            Scheduled
+                            <input type="radio" name="send_option" ng-value="true" ng-model="message.is_scheduled"/>
+                        </label>
+                    </div>
+
+                    <div class="ua-form-group" ng-show="message.is_scheduled">
+                        <input type="text" ng-model="message.date" ng-required="message.is_scheduled" placeholder="MM/DD/YYYY*"/>
+                        <input type="text" ng-model="message.time" ng-required="message.is_scheduled" placeholder="hh:mm AM/PM*"/>
+                    </div>
+
+                    <button type="submit" class="ua-btn ua-btn-block" ng-click="submitMessage()" ng-disabled="!message_form.$valid || message.bytesRemaining() < 0">
+                        <span ng-hide="message.is_scheduled">
+                            <i class="fa fa-flash"></i>
+                            Send
+                        </span>
+
+                        <span ng-show="message.is_scheduled">
+                            <i class="fa fa-clock-o"></i>
+                            Schedule
+                        </span>
                     </button>
 
+                    <a class="ua-btn ua-btn-link" href="#" ng-click="saveMessageDraft()">Save Draft</a>
                 </form>
+            </div>
 
-                <hr/>
+            <div class="ua-col-1-4">
+                <h3 class="ua-wood"><i class="fa fa-pencil"></i> Drafts</h3>
 
-                <div>
-                    <div>title: {{ message.title }}</div>
-                    <div>body: {{ message.body }}</div>
-                    <div>is_scheduled: {{ message.is_scheduled }}</div>
-                    <div>date: {{ message.date }}</div>
-                    <div>time: {{ message.time }}</div>
+                <div class="ua-message-preview" ng-repeat="m in draftMessages track by $index">
+                    <div class="ua-message-edit" ng-click="editDraft($index)">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                    <div class="ua-message-targets">
+                        <i class="fa fa-android" ng-show="m.target_android"></i>
+                        <i class="fa fa-apple" ng-show="m.target_ios"></i>
+                        <span class="ua-message-location" ng-if="m.location">{{ m.location }}</span>
+                    </div>
+                    <div class="ua-message-date" ng-if="m.is_scheduled === true">
+                        <i class="fa fa-clock-o"></i> {{ m.date }}
+                    </div>
+                    <div class="ua-message-date" ng-if="m.is_scheduled === false">
+                        <i class="fa fa-flash"></i> Instant
+                    </div>
+                    <div class="ua-message-title">{{ m.title }}</div>
+                    <div class="ua-message-body">{{ m.body }}</div>
                 </div>
             </div>
+
             <div class="ua-col-1-4">
-                <h3><i class="fa fa-check"></i> Sent</h3>
+                <h3 class="ua-wood"><i class="fa fa-clock-o"></i> Scheduled</h3>
+
+                <div class="ua-message-preview" ng-repeat="m in scheduledMessages track by $index">
+                    <div class="ua-message-date" ng-if="m.is_scheduled === true">
+                        <i class="fa fa-clock-o"></i> {{ m.date }}
+                    </div>
+                    <div class="ua-message-targets">
+                        <i class="fa fa-android" ng-show="m.target_android"></i>
+                        <i class="fa fa-apple" ng-show="m.target_ios"></i>
+                        <span class="ua-message-location" ng-if="m.location">{{ m.location }}</span>
+                    </div>
+                    <div class="ua-message-date" ng-if="m.is_scheduled === false">
+                        <i class="fa fa-flash"></i> Instant
+                    </div>
+                    <div class="ua-message-title">{{ m.title }}</div>
+                    <div class="ua-message-body">{{ m.body }}</div>
+                </div>
             </div>
+
             <div class="ua-col-1-4">
-                <h3><i class="fa fa-pencil"></i> Drafts</h3>
-            </div>
-            <div class="ua-col-1-4">
-                <h3><i class="fa fa-clock-o"></i> Scheduled</h3>
+                <h3 class="ua-wood"><i class="fa fa-check"></i> Sent</h3>
+
+                <div class="ua-message-preview ua-sent-message" ng-repeat="m in sentMessages track by $index">
+                    <div class="ua-message-date" ng-if="m.is_scheduled === true">
+                        <i class="fa fa-clock-o"></i> {{ m.date }}
+                    </div>
+                    <div class="ua-message-targets">
+                        <i class="fa fa-android" ng-show="m.target_android"></i>
+                        <i class="fa fa-apple" ng-show="m.target_ios"></i>
+                        <span class="ua-message-location" ng-if="m.location">{{ m.location }}</span>
+                    </div>
+                    <div class="ua-message-date" ng-if="m.is_scheduled === false">
+                        <i class="fa fa-flash"></i> Instant
+                    </div>
+                    <div class="ua-message-title">{{ m.title }}</div>
+                    <div class="ua-message-body">{{ m.body }}</div>
+                </div>
             </div>
         </div>
     </div>

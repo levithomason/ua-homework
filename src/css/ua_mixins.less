@@ -3,10 +3,14 @@
     float: left;
     padding-left: @ua-gutter-width;
     padding-right: @ua-gutter-width;
-//    border: 1px solid red;
     width: 100%;
 }
 
-.ua-col-pad() {
-
+// transitions
+.ua-transition(@transition) {
+    -webkit-transition: @transition;
+    -moz-transition: @transition;
+    -ms-transition: @transition;
+    -o-transition: @transition;
+    transition: @transition;
 }

@@ -76,7 +76,8 @@
             'bower_components/angular-elastic/elastic.js',
             'src/js/vendor/*.js',
             'src/js/app.js',
-            'src/js/controllers.js'
+            'src/js/controllers.js',
+            'src/js/directives.js'
         ])
             .pipe(sourcemaps.init())
             .pipe(concat('ua_homework.min.js'))
