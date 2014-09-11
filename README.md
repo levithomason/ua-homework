@@ -22,10 +22,10 @@ Watches and live reload will rebuild the app and refresh your browser on the fly
 
 **Gulp Commands**
 
-`gulp serve` - Start the dev server at [localhost:8000](localhost:8000)
-`gulp watch` - Watches `/src` directories for changes and rebuilds changed files
-`gulp build` - Manually rebuild.
-`gulp open` - Launch the app in your browser.
+- `gulp serve` - Start the dev server at [localhost:8000](localhost:8000)
+- `gulp watch` - Watches `/src` directories for changes and rebuilds changed files
+- `gulp build` - Manually rebuild.
+- `gulp open` - Launch the app in your browser.
 
 **The build**
 
