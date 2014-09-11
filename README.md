@@ -4,10 +4,16 @@ Urban Airship Design Exercise
 **[Try the demo](http://ua-homework.herokuapp.com/)**
 
 # Hacking
-1. Install gulp: `npm i gulp -g`
-2. Run the setup: `npm run setup`.
-3. After the app launches in chrome, hack on `/src`.
 
+This project requires [nodejs](http://nodejs.org/) and [Gulp](http://gulpjs.com/).
+
+**Setup**
+
+1. `npm run setup`
+2.  Wait a minute, then smile.
+
+The app will launch in chrome when done.
+You can now hack on `/src`.
 Watches and live reload will rebuild the app and refresh your browser on the fly.
 
 **What just happend?**
