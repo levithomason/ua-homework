@@ -24,10 +24,10 @@
                     target_android: true,
                     target_ios: true
                 };
+            };
 
-                $scope.message.bytesRemaining = function() {
-                    return $scope.MAX_BYTES - $scope.lengthInUtf8Bytes($scope.message.body);
-                };
+            $scope.getMessageBytesRemaining = function() {
+                return $scope.MAX_BYTES - $scope.lengthInUtf8Bytes($scope.message.body);
             };
 
             $scope.submitMessage = function() {

@@ -43,7 +43,7 @@
 
                     <input ng-model="message.title" type="text" name="ua-message-title" placeholder="Title*" required/>
                     <textarea ng-model="message.body" msd-elastic name="ua-message-body" placeholder="Body*" required></textarea>
-                    <span class="ua-byte-counter" ng-class="{'ua-error': message.bytesRemaining() < 0}">{{ message.bytesRemaining() }} bytes left</span>
+                    <span class="ua-byte-counter" ng-class="{'ua-error': getMessageBytesRemaining() < 0}">{{ getMessageBytesRemaining() }} bytes left</span>
 
                     <hr/>
 
@@ -88,7 +88,7 @@
                         <input type="text" ng-model="message.time" ng-required="message.is_scheduled" placeholder="hh:mm AM/PM*"/>
                     </div>
 
-                    <button type="submit" class="ua-btn ua-btn-block" ng-click="submitMessage()" ng-disabled="!message_form.$valid || message.bytesRemaining() < 0">
+                    <button type="submit" class="ua-btn ua-btn-block" ng-click="submitMessage()" ng-disabled="!message_form.$valid || getMessageBytesRemaining() < 0">
                         <span ng-hide="message.is_scheduled">
                             <i class="fa fa-flash"></i>
                             Send

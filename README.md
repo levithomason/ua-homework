@@ -1,11 +1,11 @@
 Urban Airship Design Exercise
 =============================
 
-# [Demo](http://ua-homework.herokuapp.com/)
+**[Try the demo](http://ua-homework.herokuapp.com/)**
 
 # Hacking
-1. Clone the repo.
-2. `npm run setup`.
+1. Install gulp: `npm i gulp -g`
+2. Run the setup: `npm run setup`.
 3. After the app launches in chrome, hack on `/src`.
 
 Watches and live reload will rebuild the app and refresh your browser on the fly.
@@ -14,30 +14,22 @@ Watches and live reload will rebuild the app and refresh your browser on the fly
 
 - `npm install .` - Installs all the node modules.
 - `bower install` - Installs our bower components.
-- `gulp` - Runs the default gulp task, which does a few wonderful things:
-    - Copies bower files
+- `gulp` - Runs the default gulp task:
     - Creates a `/build`.
     - Serves `/build` at [localhost:8000](localhost:8000) with live reload.
-    - Watches `/src` directories for changes, and triggers super fast incremental rebuilds.
-    - Opens the app in chrome, for hacking.
+    - Watches `/src` directories for changes and triggers super fast incremental rebuilds.
+    - Opens the app in Chrome.
 
-
-**Gulp Watch Crashes**
-
-Sometimes, Gulp watches crash due to failed attempts to build with syntax errors.
-Starting the dev server and the watcher in separate terminal tabs lets you more easily restart the watch task if it crashes.
+**Gulp Commands**
 
 `gulp serve` - Start the dev server at [localhost:8000](localhost:8000)
-
 `gulp watch` - Watches `/src` directories for changes and rebuilds changed files
-
-If you like you can trigger full builds manually:
-
-`gulp build`
+`gulp build` - Manually rebuild.
+`gulp open` - Launch the app in your browser.
 
 **The build**
 
-Gulp is taking care of less compiling, concatenation, minification, and uglifying.
+Gulp is taking care of less compiling, prefixing and minifying css, js concatenation and uglifying.
 
 # Design Brief
 A single page app for creating, editing, and scheduling messages.
@@ -52,7 +44,6 @@ The submit button is disabled for the following cases:
     - required title or body is missing.
     - body is greater than 256 bytes, calculated as UTF-8 string size.
     - message is a scheduled message and missing required date or time fields.
-
 
 **Drafts**
 
